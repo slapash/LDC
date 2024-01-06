@@ -121,6 +121,46 @@ def rajouter_cote(
     return cote  # renvoi les cotes
 
 
+def simuler_match(equipe_domicile, equipe_exterieur):
+
+    cote_domicile = rajouter_cote(
+        equipe_domicile,
+        clubs[equipe_domicile]["cote"],
+        equipe_domicile in favoris,
+        True,
+    )  # calcul les cotes à domicile + favoris
+
+    cote_exterieur = rajouter_cote(
+        equipe_exterieur,
+        clubs[equipe_exterieur]["cote"],
+        equipe_exterieur in favoris,
+        False,
+    )  # calcul les cotes à l'exterieur + favoris
+
+    score_domicile = min(
+        random.randint(0, 4), 4
+    )  # simule match, but allant de 1 à 4, max 4, aleatoir mais nb entier (randint)
+
+    score_exterieur = min(
+        random.randint(0, 4), 4
+    )  # meme chose pour l'exterieur/ la fonction min() garanti que ca ne depasse pas 4
+
+    if score_domicile > score_exterieur:  # si score domicile > score exterieur
+
+        return (
+            "Victoire domicile",
+            cote_domicile,
+            cote_exterieur,
+        )  # renvoi "victoire domicile", la cote a dom et la cote à l'ext
+
+    elif score_domicile < score_exterieur:  # meme chose avec l'inverse
+
+        return "Victoire exterieur", cote_domicile, cote_exterieur
+
+    else:
+
+        return "Match nul", cote_domicile, cote_exterieur  # meme chose avec match nul
+
 
 def enregistrer_resultat(
     resultats, groupe, equipe_dom, equipe_ext, resultat, cote_dom, cote_ext
@@ -155,46 +195,6 @@ def enregistrer_resultat(
     )  # print les infos du match
 
     time.sleep(0.1)  # les resultats sont affichés avecune interval d'une seconde
-
-def simuler_match(equipe_domicile, equipe_exterieur):
-
-    # Calcule les cotes des équipes
-
-    cote_domicile = rajouter_cote(
-        equipe_domicile,
-        clubs[equipe_domicile]["cote"],
-        equipe_domicile in favoris,
-        True,
-    )
-
-    cote_exterieur = rajouter_cote(
-        equipe_exterieur,
-        clubs[equipe_exterieur]["cote"],
-        equipe_exterieur in favoris,
-        False,
-    )
-
-    # Limite le score à un maximum de 4 buts
-
-    score_domicile = min(random.randint(0, 4), 4)
-
-    score_exterieur = min(random.randint(0, 4), 4)
-
-    # Détermine le résultat du match
-
-    if score_domicile > score_exterieur:
-
-        resultat = "Victoire domicile"
-
-    elif score_domicile < score_exterieur:
-
-        resultat = "Victoire exterieur"
-
-    else:
-
-        resultat = "Match nul"
-
-    return resultat, cote_domicile, cote_exterieur, score_domicile, score_exterieur
 
 
 def organiser_classement(groupes):
@@ -346,6 +346,46 @@ for match in huitiemes_de_finale:
 
     print(match)"""
 
+
+def simuler_match(equipe_domicile, equipe_exterieur):
+
+    # Calcule les cotes des équipes
+
+    cote_domicile = rajouter_cote(
+        equipe_domicile,
+        clubs[equipe_domicile]["cote"],
+        equipe_domicile in favoris,
+        True,
+    )
+
+    cote_exterieur = rajouter_cote(
+        equipe_exterieur,
+        clubs[equipe_exterieur]["cote"],
+        equipe_exterieur in favoris,
+        False,
+    )
+
+    # Limite le score à un maximum de 4 buts
+
+    score_domicile = min(random.randint(0, 4), 4)
+
+    score_exterieur = min(random.randint(0, 4), 4)
+
+    # Détermine le résultat du match
+
+    if score_domicile > score_exterieur:
+
+        resultat = "Victoire domicile"
+
+    elif score_domicile < score_exterieur:
+
+        resultat = "Victoire exterieur"
+
+    else:
+
+        resultat = "Match nul"
+
+    return resultat, cote_domicile, cote_exterieur, score_domicile, score_exterieur
 
 
 def simuler_huitiemes_de_finale(matchs_huitiemes):
